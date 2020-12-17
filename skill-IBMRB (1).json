@@ -1,0 +1,293 @@
+{
+  "intents": [
+    {
+      "intent": "Enquiry",
+      "examples": [
+        {
+          "text": "how much time to deliver to my address?"
+        },
+        {
+          "text": "on which item I get discounts?"
+        },
+        {
+          "text": "what are the offers ?"
+        },
+        {
+          "text": "what is the menu?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Greetings",
+      "examples": [
+        {
+          "text": "good afternoon"
+        },
+        {
+          "text": "good evening"
+        },
+        {
+          "text": "good morning"
+        },
+        {
+          "text": "hello"
+        },
+        {
+          "text": "hey"
+        },
+        {
+          "text": "Hi"
+        },
+        {
+          "text": "watsup"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "Enquiry",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "menu",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "offers",
+          "synonyms": [
+            "discounts"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "Greetings",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "good afternoon",
+          "synonyms": [
+            "ga",
+            "gud aft"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "good evening",
+          "synonyms": [
+            "evening",
+            "ge",
+            "gud evn"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "good morning",
+          "synonyms": [
+            "gd mng",
+            "gm",
+            "gud mng",
+            "morning"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_4_1606999704349",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "standard",
+      "title": "Enquiry",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#Enquiry",
+      "dialog_node": "node_4_1606999704349",
+      "previous_sibling": "node_7_1606985764615"
+    },
+    {
+      "type": "standard",
+      "title": "Greetings",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#Greetings || @Greetings",
+      "dialog_node": "node_7_1606985764615",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "hi, good morning to you too"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1606985764615",
+      "conditions": "@Greetings:(good morning)",
+      "dialog_node": "response_10_1606998583903"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "title": "Menu Card",
+            "source": "https://www.google.com/search?q=menu+card+images+LINK+ENding+with+jpg&tbm=isch&ved=2ahUKEwj646u-u7PtAhUTEnIKHcaXB8cQ2-cCegQIABAA&oq=menu+card+images+LINK+ENding+with+jpg&gs_lcp=CgNpbWcQAzoCCAA6BAgAEB46BggAEAUQHlDxy0BY8YtBYLeUQWgAcAB4AYABlAKIAYIVkgEGOC4xMS4ymAEAoAEBqgELZ3dzLXdpei1pbWfAAQE&sclient=img&ei=u7fJX7qaJ5OkyAPGr564DA&bih=722&biw=1536#imgrc=0a4m1JFyAN9n1M",
+            "description": "All the items displayed in the menu card are available",
+            "response_type": "image"
+          }
+        ]
+      },
+      "parent": "node_4_1606999704349",
+      "conditions": "@Enquiry:menu",
+      "dialog_node": "response_2_1607055874943"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "hello good afternoon"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1606985764615",
+      "conditions": "@Greetings:(good afternoon)",
+      "dialog_node": "response_3_1606998809389",
+      "previous_sibling": "response_10_1606998583903"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "20% discount on all the food items"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1606999704349",
+      "conditions": "@Enquiry:offers",
+      "dialog_node": "response_6_1607056458467",
+      "previous_sibling": "response_2_1607055874943"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "hey good evening"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1606985764615",
+      "conditions": "@Greetings:(good evening)",
+      "dialog_node": "response_7_1606998830322",
+      "previous_sibling": "response_3_1606998809389"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi, this is Restobot, I am here to help you with your orders"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "system_entities": {
+      "enabled": true
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "intent_classification": {
+      "training_backend_version": "v2"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "name": "IBMRB",
+  "language": "en",
+  "description": ""
+}
